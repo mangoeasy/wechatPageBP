@@ -1,0 +1,34 @@
+<div class="js--isotope-target  js--cat-{{catID}}" data-price="{{price}}" data-rating="{{rating}}">
+  <div class="col-xs-6 col-sm-3">
+    <div class="products__single">
+      <div class="products__image  push-down-15">
+        <a href="single-product.html">
+          <img alt="#" class="product__image" width="263" height="334" src="images/dummy/w263/{{image}}">
+        </a>
+        <div class="product-overlay">
+          <a class="product-overlay__more" href="single-product.html">
+            <span class="glyphicon glyphicon-search"></span>
+          </a>
+          <a class="product-overlay__cart" href="#">
+            +<span class="glyphicon glyphicon-shopping-cart"></span>
+          </a>
+          <div class="product-overlay__stock">
+            <span class="{{#if stock}}in-stock{{else}}out-of-stock{{/if}}">&bull;</span> <span class="in-stock--text">{{#if stock}}In stock{{else}}Out of stock{{/if}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-9">
+    <br>
+    <div class="products__title">
+      <a class="products__link  js--isotope-title" href="single-product.html">{{title}}</a>
+    </div>
+    <div class="products__price">
+      ${{price}}
+    </div>
+    <p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat mauris eget magna egestas porta. Curabitur sagittis sagittis neque rutrum congue. Donec lobortis dui sagittis, ultrices nunc ornare, ultricies elit. Curabitur tristique felis pulvinar nibh porta, sit amet interdum ligula placerat. Maecenas auctor, sem nec eleifend blandit...
+    </p>
+  </div>
+</div>

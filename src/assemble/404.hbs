@@ -1,0 +1,23 @@
+---
+breadcrumbs:
+  index.html: Home
+  nolink: 404
+---
+{{> head}}
+{{> header}}
+{{> breadcrumbs}}
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="page-not-found">
+        <div class="page-not-found__background">
+          <img alt="404" src="images/404.png" width="217" height="222">
+        </div>
+        <h1><span class="light">Error.</span> Looks Like Something Went Wrong!</h1>
+        {{> divider}}
+        <span class="page-not-found__text">The page you are looking is not there. Be smart and go <a class="page-not-found__link" href="index.html">Home</a>.</span>
+      </div>
+    </div>
+  </div>
+</div>
+{{> footer}}

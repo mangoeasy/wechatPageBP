@@ -1,0 +1,149 @@
+---
+breadcrumbs:
+  index.html: Home
+  shop.html: Shop
+  nolink: Single Product
+---
+{{> head}}
+{{> header}}
+{{> breadcrumbs}}
+
+<div class="container">
+  <div class="push-down-30">
+    <div class="row">
+      <div class="col-xs-12 col-sm-4">
+        <div class="product-preview">
+          <div class="push-down-20">
+            <img class="js--product-preview" alt="Single product image" src="images/dummy/w360/13.jpg" width="360" height="458">
+          </div>
+          <div class="product-preview__thumbs  clearfix">
+            <div class="product-preview__thumb  active  js--preview-thumbs">
+              <a href=".js--product-preview" data-src="images/dummy/w360/13.jpg">
+                <img src="images/dummy/w66/13.jpg" alt="Single product thumbnail image" width="66" height="82" />
+              </a>
+            </div>
+            <div class="product-preview__thumb  js--preview-thumbs">
+              <a href=".js--product-preview" data-src="images/dummy/w360/9.jpg">
+                <img src="images/dummy/w66/9.jpg" alt="Single product thumbnail image" width="66" height="82" />
+              </a>
+            </div>
+            <div class="product-preview__thumb  js--preview-thumbs">
+              <a href=".js--product-preview" data-src="images/dummy/w360/10.jpg">
+                <img src="images/dummy/w66/10.jpg" alt="Single product thumbnail image" width="66" height="82" />
+              </a>
+            </div>
+            <div class="product-preview__thumb  js--preview-thumbs">
+              <a href=".js--product-preview" data-src="images/dummy/w360/14.jpg">
+                <img src="images/dummy/w66/14.jpg" alt="Single product thumbnail image" width="66" height="82" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-8">
+        <div class="products__content">
+          <div class="push-down-30"></div>
+          {{#filter database.products 12 property='id'}}
+          <span class="products__category">{{category}}</span>
+          <h1 class="single-product__title"><span class="light">Fresh</span> Super Fruit</h1>
+          <span class="single-product__price">${{price}}</span>
+          <div class="single-product__rating">
+            <span class="glyphicon  glyphicon-star  star-on"></span>
+            <span class="glyphicon  glyphicon-star  star-on"></span>
+            <span class="glyphicon  glyphicon-star  star-on"></span>
+            <span class="glyphicon  glyphicon-star  star-on"></span>
+            <span class="glyphicon  glyphicon-star  star-off"></span>
+          </div>
+          {{/filter}}
+          <div class="in-stock--single-product">
+            <span class="in-stock">&bull;</span> <span class="in-stock--text">In stock</span>
+          </div>
+          <hr class="bold__divider">
+          <p class="single-product__text">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vulputate, leo vel malesuada tincidunt, purus nunc tristique erat, at elementum tellus mi nec mi. Nunc rutrum ullamcorper. In hac habitasse platea tumst. Vestibulum lorem dolor, pharetra sit amet urna nec, hendrerit scelerisque risus. Vestibulum lorem dolor,  pharetra sit amet urna nec, hendrerit scelerisque risus. In hac habitasse platea dictumst.
+          </p>
+          <hr class="bold__divider">
+          <!-- Single button -->
+          <select class="btn  btn-shop">
+            <option>350g</option>
+            <option>700g</option>
+            <option>1200g</option>
+          </select>
+          <!-- Quantity buttons -->
+          <div class="quantity  js--quantity">
+            <input type="button" value="-" class="quantity__button  js--minus-one  js--clickable">
+            <input type="text" name="quantity" value="1" class="quantity__input">
+            <input type="button" value="+" class="quantity__button  js--plus-one  js--clickable">
+          </div>
+          <!-- Add to cart button -->
+          <a class="btn btn-primary--transition" href="#">
+            <span class="glyphicon glyphicon-plus"></span><span class="glyphicon glyphicon-shopping-cart"></span>
+            <span class="single-product__btn-text">Add to shopping cart</span>
+          </a>
+          <!-- Social banners -->
+          <div class="row">
+            <div class="col-xs-12  col-sm-6  col-md-4">
+              <div class="banners--small  banners--small--social">
+                <a href="#" class="social"><span class="zocial-facebook"></span>
+                Share on<br>
+                <span class="banners--small--text">Facebook</span>
+                </a>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6  col-md-4">
+              <div class="banners--small  banners--small--social">
+                <a href="#" class="social"><span class="zocial-twitter"></span>
+                Tweet it<br>
+                <span class="banners--small--text">Twitter</span>
+                </a>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6  col-md-4">
+              <div class="banners--small  banners--small--social">
+                <a href="#" class="social"><span class="zocial-pinterest"></span>
+                Pin on<br>
+                <span class="banners--small--text">Pinterest</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="push-down-30">
+    <div class="row">
+      <div class="col-xs-12">
+        {{> tabs}}
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <div class="push-down-30">
+    <div class="products-navigation">
+      <div class="products-navigation__title">
+        <h3><span class="light">Related</span> Products</h3>
+      </div>
+    </div>
+  </div>
+
+  <!-- Products -->
+  <div class="push-down-30">
+    <div class="row">
+      {{!-- {{#eachIndex database.products.latest}}
+        {{#modulo index 2}} <div class="clearfix  visible-xs"></div> {{/modulo}}
+        {{> product}}
+      {{/eachIndex}} --}}
+      {{#eachIndex database.productsSelection.related}}
+        {{#modulo index 2}} <div class="clearfix visible-xs"></div> {{/modulo}}
+        {{#filter ../database.products item property='id'}}
+          {{> product}}
+        {{/filter}}
+      {{/eachIndex}}
+    </div>
+  </div>
+</div>
+{{> footer}}

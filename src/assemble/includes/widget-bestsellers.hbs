@@ -1,0 +1,17 @@
+{{#each database.productsSelection.bestSellers}}
+  {{#filter ../database.products this property='id'}}
+  <div class="clearfix  push-down-15">
+    <a href="single-product.html">
+      <img alt="" class="widgets__products" width="78" height="78" src="images/dummy/w78/{{image}}">
+    </a>
+    <div class="products__title">
+      <a class="products__link" href="single-product.html">{{title}}</a>
+    </div>
+    <span class="line-through">${{add price 3}}</span> <span class="products__price--widgets">${{price}}</span>
+    <br><br>
+    <div class="products__category">
+      {{category}}
+    </div>
+  </div>
+  {{/filter}}
+{{/each}}

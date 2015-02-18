@@ -1,0 +1,15 @@
+<div class="breadcrumbs{{#if breadcrumbsAdditionalClass}}  {{breadcrumbsAdditionalClass}}{{/if}}">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <nav>
+          <ol class="breadcrumb">
+            {{#each breadcrumbs}}
+            <li{{#is @key 'nolink'}} class="active"{{/is}}>{{#isnt @key 'nolink'}}<a href="{{@key}}">{{/isnt}}{{this}}{{#isnt @key 'nolink'}}</a>{{/isnt}}</li>
+            {{/each}}
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
