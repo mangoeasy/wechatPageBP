@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=640,target-densitydpi=device-dpi,user-scalable=no" />
+<title>2015日内瓦国际钟表展</title>
+
+<script src="http://code.createjs.com/easeljs-0.7.1.min.js"></script>
+<script src="http://code.createjs.com/tweenjs-0.5.1.min.js"></script>
+<script src="http://code.createjs.com/movieclip-0.7.1.min.js"></script>
+<script src="http://code.createjs.com/preloadjs-0.4.1.min.js"></script>
+<script src="js/primetime.js"></script>
+<script src="js/jquery-1.11.1.min.js"></script>
+
+<style>
+    body, html{margin:0; padding:0; overflow:hidden; width:100%; height:100%;}
+    .wrapper{width:640px; height:100%; margin:0 auto; position:absolute; left:50%; top:0; margin-left:-320px; overflow:hidden;}
+    .motion{width:640px; height:1136px; margin:0 auto; position:relative;}
+    .music_btn{width:66px; height:66px; position:absolute; z-index:55; right:20px; bottom:20px; cursor:pointer;}
+    
+    #canvas{position:absolute; left:0; top:0;}
+    
+    .p1{width:640px; height:1136px; margin:0 auto; position:relative; background:#FFF;}
+    .p2{width:640px; height:1136px; margin:0 auto; position:relative; }
+    .p3{width:640px; height:1136px; margin:0 auto; position:relative; }
+    .p4{width:640px; height:1136px; margin:0 auto; position:relative; }
+    
+    .loading{width:124px; height:124px; position:absolute; left:50%; top:50%; margin-left:-62px; margin-top:-62px; z-index:666}
+    .intro{width:640px; height:1136px; margin:0 auto; position:absolute; z-index:333; display:none; left:0; top:0;}
+    .share_tips{width:640px; height:1136px; position:absolute; z-index:88; left:50%; margin-left:-320px; display:none;}
+    .share_btn{width:120px; height:120px; position:absolute; z-index:333; left:260px; top:500px; background:#000; opacity:0}
+    .skip{width:58px; height:30px; position:absolute; z-index:332; right:100px; margin-left:-29px; top:0; cursor:pointer;}
+    .progress{position:absolute; left:50%; top:50%; margin-left:-25px; margin-top:-15px; font-size:1.5em; z-index:888; color:#999; width:50px; height:30px; text-align:center;}
+    .arrow{width:50px; height:59px; position:absolute; left:50%; top:0; margin-left:-20px;}
+    #canvas2{position:absolute; left:50%; top:600px; z-index:55; width:251px; height:58px; margin-left:-125px;}
+    #canvas3{position:absolute; left:50%; top:400px; z-index:55; width:251px; height:58px; margin-left:-115px;}
+</style>
+<script>
+
+var isMobile = {
+    Android: function() {
+        return navigator.userAgent.match(/Android/i) ? true : false;
+    },
+    BlackBerry: function() {
+        return navigator.userAgent.match(/BlackBerry/i) ? true : false;
+    },
+    iOS: function() {
+        return navigator.userAgent.match(/iPhone|iPod/i) ? true : false;
+    },
+    Windows: function() {
+        return navigator.userAgent.match(/IEMobile/i) ? true : false;
+    },
+    Windows2: function() {
+        return navigator.userAgent.match(/Windows Phone/i) ? true : false;
+    },
+    
+    any: function() {
+        return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Windows() || isMobile.Windows2());
+    }
+};
+
+var playEnd = false;
+var pageIndex = 1;
+var pageHeight;
+var audioFlag = true;
+var timeout;
+var myAudio=new Audio();
+//myAudio.setAttribute('src','bgMusic.mp3');                
+myAudio.volume=1;
+myAudio.autoplay = true;
+//myAudio.loop = true;
+
+function handleProgress(event) {
+    var loaded = Math.floor(event.loaded * 100);
+    $(".progress").html(loaded);
+}
+function completed(totalTime){
+    console.log(totalTime);
+    
+    $(".intro").fadeIn();
+    setTimeout(function(){
+        window.location.href = "index2.html";
+    }, totalTime)
+    
+}
+
+
+/*past and future */
+
+var canvas, stage, exportRoot;
+
+function init() {
+    canvas = document.getElementById("canvas");
+    images = images||{};
+
+    var loader = new createjs.LoadQueue(false);
+    loader.addEventListener("fileload", handleFileLoad);
+    loader.addEventListener("complete", handleComplete);
+    loader.addEventListener("progress", handleProgress);
+
+    loader.loadManifest(lib.properties.manifest);
+}
+
+function handleFileLoad(evt) {
+    if (evt.item.type == "image") { images[evt.item.id] = evt.result; }
+}
+
+function handleComplete() {
+    exportRoot = new lib.primetime();
+
+    stage = new createjs.Stage(canvas);
+    stage.addChild(exportRoot);
+    stage.update();
+
+    createjs.Ticker.setFPS(lib.properties.fps);
+    createjs.Ticker.addEventListener("tick", stage);
+
+    $(".loading").fadeOut();
+    $(".progress").fadeOut();
+    myAudio.play();
+
+}
+var startY, endY;
+function touchstart(event){
+    event.preventDefault();
+    var touch = event.touches[0];
+    endY = startY = touch.pageY;
+}
+
+function touchmove(event){
+    event.preventDefault();
+    var touch = event.touches[0];
+    endY = touch.pageY;
+}
+
+function touchend(event){
+    var distance = startY - endY;
+    if(distance > 30){
+        if(playEnd){
+            if(pageIndex < 4) {
+                pageIndex ++;
+                update(pageIndex);
+            }
+        }
+    }
+    else if(distance < -30){
+        
+        if($(".intro").css("display") == "block"){
+            if(pageIndex == 1) {
+                $(".intro").fadeOut();
+                init();
+            }   
+        }
+        
+        if(pageIndex > 1) {
+            pageIndex --;   
+            update(pageIndex);
+        }
+            
+    }
+}
+
+$(document).ready(function(e) {
+   
+   pageHeight = window.innerHeight;
+   /*  var t = (pageHeight - 1136) * 0.5;
+   // $(".wrapper").height(1136 * 4);
+    $("#canvas").css({"top":t+"px"});*/
+
+    $(".skip").css({"top":(pageHeight - 70)+"px"});
+    $(".wrapper")[0].addEventListener('touchstart', touchstart, false);
+    $(".wrapper")[0].addEventListener('touchmove', touchmove, false);
+    $(".wrapper")[0].addEventListener('touchend', touchend, false);
+})
+</script>
+</head>
+
+<body onload="init();"  style="background-color:#000000">
